@@ -1,26 +1,230 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Design Tokens (CSS Custom Properties)
+   Brand: TeddyPups — "Hand-drawn storybook" aesthetic
+   ========================================================================== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Base palette ── */
+  --cream:       #FFFDF8;
+  --milk:        #FFFFFF;
+  --cocoa:       #2A160C;
+  --cocoa-muted: #6B5B53;
+  --rust:        #B5511F;
+  --rust-hover:  #9E4316;
+  --sand:        #FDE3B3;
+  --sand-light:  #FFF8EB;
+  --green:       #1F7A4D;
+  --green-hover: #196640;
+  --tape:        #F3D9A8;
+
+  /* ── Home-page extended palette ── */
+  --peach:       #FFE9C7;
+  --apricot:     #F6B86A;
+  --terracotta:  #B5511F;   /* alias for rust */
+  --brown:       #5A2E17;
+  --night:       #1D0F09;
+
+  /* ── Day-to-night journey CSS variables (JS-driven per section) ── */
+  --page-bg:   var(--peach);
+  --page-ink:  var(--cocoa);
+
+  /* ── Hard offset shadow constants ── */
+  --shadow-hard-sm: 2px 2px 0 var(--cocoa);
+  --shadow-hard:    4px 4px 0 var(--cocoa);
+  --shadow-hard-lg: 6px 6px 0 var(--cocoa);
+
+  /* ── Layout ── */
+  --content-max-width: 1200px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ==========================================================================
+   Tailwind Theme Tokens
+   ========================================================================== */
+@theme {
+  --color-cream:       var(--cream);
+  --color-milk:        var(--milk);
+  --color-cocoa:       var(--cocoa);
+  --color-cocoa-muted: var(--cocoa-muted);
+  --color-rust:        var(--rust);
+  --color-rust-hover:  var(--rust-hover);
+  --color-sand:        var(--sand);
+  --color-sand-light:  var(--sand-light);
+  --color-green:       var(--green);
+  --color-green-hover: var(--green-hover);
+  --color-tape:        var(--tape);
+  --color-peach:       var(--peach);
+  --color-apricot:     var(--apricot);
+  --color-terracotta:  var(--terracotta);
+  --color-brown:       var(--brown);
+  --color-night:       var(--night);
+
+  --font-display: var(--font-display);
+  --font-body:    var(--font-body);
+  --font-script:  var(--font-script);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ==========================================================================
+   CSS Reset & Base Styles
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100%;
+  background-color: var(--cream);
+  color: var(--cocoa);
+  font-family: var(--font-body), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Dotted Storybook Background Pattern */
+.bg-storybook-dots {
+  background-color: var(--cream);
+  background-image: radial-gradient(rgba(42, 22, 12, 0.12) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Hard Offset Shadow Utilities */
+.shadow-hard-sm {
+  box-shadow: 2px 2px 0 var(--cocoa);
+}
+
+.shadow-hard {
+  box-shadow: 4px 4px 0 var(--cocoa);
+}
+
+.shadow-hard-lg {
+  box-shadow: 6px 6px 0 var(--cocoa);
+}
+
+/* Accessible selection styling */
+::selection {
+  background-color: var(--sand);
+  color: var(--cocoa);
+}
+
+/* Custom Paw Print Cursor — applied globally */
+*,
+*::before,
+*::after {
+  cursor: url('/images/paw-cursor.png') 16 16, url('/images/paw-cursor.svg') 16 16, auto !important;
+}
+
+/* Interactive elements keep the paw (paw instead of text-cursor on copy areas too) */
+button,
+a,
+[role="button"],
+.cursor-pointer,
+select,
+input[type="submit"],
+input[type="button"],
+input[type="checkbox"],
+input[type="radio"],
+label[for],
+summary {
+  cursor: url('/images/paw-cursor.png') 16 16, url('/images/paw-cursor.svg') 16 16, pointer !important;
+}
+
+/* Responsive media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Accessible focus-visible outline */
+:focus-visible {
+  outline: 3px solid var(--rust);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Lenis smooth scrolling integration */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Animated Hamburger & Mobile Menu Drawer
+   ========================================================================== */
+.hamburger-bar {
+  transition: transform 0.38s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+              opacity 0.22s ease,
+              width 0.28s ease,
+              background-color 0.2s ease;
+  transform-origin: center;
+}
+
+@keyframes menuPopIn {
+  0% {
+    opacity: 0;
+    transform: translateX(40px) scale(0.95);
+  }
+  70% {
+    transform: translateX(-4px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.menu-item-enter {
+  animation: menuPopIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pawPulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.15) rotate(6deg);
+  }
+}
+
+.animate-paw-pulse {
+  animation: pawPulse 1.8s ease-in-out infinite;
 }
