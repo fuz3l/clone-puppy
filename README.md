@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TeddyPups 🐾 — Premium Pet Adoption Platform
 
-## Getting Started
+A warm, friendly, and accessible pet adoption web application built with **Next.js (App Router)**, **plain JavaScript (ES6+ / JSX)**, and **Tailwind CSS**.
 
-First, run the development server:
+---
 
+## 🛠 Tech Stack
+
+- **Framework**: Next.js 15+ (App Router)
+- **Language**: JavaScript (ES6+ / JSX with JSDoc typing)
+- **Styling**: Tailwind CSS v4 with custom CSS variable design tokens
+- **Typography**: Google Fonts via `next/font/google` (`Fredoka`, `Plus Jakarta Sans`, `Caveat`)
+- **Smooth Scroll**: [Lenis](https://lenis.darkroom.engineering/) with `prefers-reduced-motion` compliance
+- **Icons**: Lucide React
+- **Utilities**: `clsx`
+
+---
+
+## 🎨 Design Tokens & Palette
+
+The visual design system is warm, friendly, and elevated, inspired by modern pet-adoption and care brands:
+
+| Token | CSS Variable | Hex | Purpose |
+| :--- | :--- | :--- | :--- |
+| **Cream** | `--cream` | `#FAF6F0` | Warm, calming page background |
+| **Milk** | `--milk` | `#FFFFFF` | Elevated card surfaces and interactive containers |
+| **Cocoa** | `--cocoa` | `#2E221B` | High-contrast, friendly dark text & accents |
+| **Cocoa Muted** | `--cocoa-muted` | `#6B5B53` | Secondary text, captions, and metadata |
+| **Apricot** | `--apricot` | `#E67A47` | Primary brand accent for CTAs and highlights |
+| **Apricot Light**| `--apricot-light` | `#FCEEE6` | Badge backgrounds and accessible text selection |
+| **Sand** | `--sand` | `#E7DDD2` | Clean structural borders and dividers |
+| **Sand Light** | `--sand-light` | `#F4EFEB` | Subtle pill/tag backgrounds and input surfaces |
+
+### Typography Tokens
+- **Display Heading (`font-display`)**: `Fredoka` (Rounded, playful, welcoming)
+- **Body Text (`font-body`)**: `Plus Jakarta Sans` (Clean, highly legible geometric sans)
+- **Accent Script (`font-script`)**: `Caveat` (Warm, personal handwritten touches)
+
+---
+
+## 🚀 Setup & Local Development
+
+### Prerequisites
+- Node.js 18.18+ or 20+
+- npm or pnpm / yarn
+
+### Installation
 ```bash
+# Clone the repository (or navigate to project directory)
+cd teddypups
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Building for Production
+```bash
+npm run build
+npm run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📁 Folder Structure
 
-To learn more about Next.js, take a look at the following resources:
+```text
+teddypups/
+├── public/
+│   └── images/                     # Static imagery and SVG placeholders
+├── src/
+│   ├── app/
+│   │   ├── favicon.ico
+│   │   ├── globals.css             # Design tokens, CSS reset, focus outline & utilities
+│   │   ├── layout.js               # Shell (Skip link, fixed header, main, footer, mobile bar, Lenis)
+│   │   └── page.js                 # Foundation showcase preview page
+│   ├── components/
+│   │   ├── layout/
+│   │   │   └── SmoothScroll.jsx    # Client component wrapping Lenis smooth scrolling
+│   │   ├── sections/               # Page section components (Hero, Adoption, etc. - Phase 2)
+│   │   └── ui/
+│   │       ├── Button.jsx          # Button primitive (primary/secondary/ghost, sm/md/lg)
+│   │       ├── Container.jsx       # Reusable layout container (max 1200px + gutters)
+│   │       └── SectionHeading.jsx  # Reusable section heading (eyebrow, title, subtitle)
+│   ├── data/
+│   │   └── puppies.js              # Puppy data model with JSDoc @typedef and sample entries
+│   └── lib/
+│       └── utils.js                # Shared utility helpers (e.g. cn with clsx)
+├── jsconfig.json                   # Path alias mappings (@/* -> ./src/*)
+├── next.config.mjs                 # Next.js & Turbopack configuration
+├── package.json
+└── README.md
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ♿ Accessibility & Motion
 
-## Deploy on Vercel
+- **Skip Link**: Top-level accessible skip-to-content anchor for screen reader and keyboard navigators.
+- **Focus Rings**: High-contrast, customized `:focus-visible` ring using `--apricot` accent.
+- **Prefers Reduced Motion**: Lenis scrolling gracefully deactivates and all animations collapse to `0.01ms` for users with motion sensitivity.
+- **Semantic Structure**: Proper landmark roles (`banner`, `main`, `contentinfo`, `toolbar`) and heading levels.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📸 Image Credits & Sources
+
+All photography utilized in puppy sample data and placeholders are sourced under free-use, permissive licenses:
+- Unsplash: Free photography platform ([unsplash.com/license](https://unsplash.com/license))
+  - Milo (Teddy Maltipoo): Unsplash pet collection
+  - Rosie (Mini Cavapoo): Unsplash pet collection
+  - Biscuit (Toy Poodle): Unsplash pet collection
+- SVG placeholders generated in-repo under `/public/images/puppy-placeholder.svg`
